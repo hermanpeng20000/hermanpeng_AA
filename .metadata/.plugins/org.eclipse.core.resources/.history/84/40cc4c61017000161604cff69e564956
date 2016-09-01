@@ -1,0 +1,7 @@
+
+public class Calculate {
+	public static void main(String[] args) {
+		int number;
+		square = number * number;		
+	}
+}

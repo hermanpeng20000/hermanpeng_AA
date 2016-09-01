@@ -1,0 +1,7 @@
+
+public class Calculate {
+	public int square(number){
+		int number;
+		square = number * number;		
+	}
+}

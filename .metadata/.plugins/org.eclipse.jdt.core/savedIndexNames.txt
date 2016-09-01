@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INDEX VERSION 1.129+/Users/HermanPeng/Desktop/hermanpeng_AA/.metadata/.plugins/org.eclipse.jdt.core
 3157663476.index
 2545238116.index
@@ -26,3 +27,10 @@ INDEX VERSION 1.129+/Users/HermanPeng/Desktop/hermanpeng_AA/.metadata/.plugins/o
 3302703152.index
 3266567714.index
 2465022724.index
+=======
+INDEX VERSION 1.129+/Users/HermanPeng/hermanpeng_AA/.metadata/.plugins/org.eclipse.jdt.core
+1510534497.index
+2292746678.index
+820019804.index
+751203406.index
+>>>>>>> origin/master
