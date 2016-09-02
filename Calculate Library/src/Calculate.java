@@ -1,6 +1,5 @@
 
 public class Calculate {
-	public int Calculate;
-	int number;
-	square = number * number;		
+	public static int square(int x){
+	return x * x;}		
 }
