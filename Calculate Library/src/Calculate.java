@@ -1,5 +1,6 @@
 
 public class Calculate {
+<<<<<<< HEAD
 	//square
 	public static int square(int x){
 		return x * x;
@@ -35,4 +36,8 @@ public class Calculate {
 	//toMixedNum
 	public 
 	//foil
+=======
+	public static int square(int x){
+		return x* x;}		
+>>>>>>> origin/master
 }
