@@ -38,6 +38,10 @@ public class Calculate {
 	//foil
 =======
 	public static int square(int x){
+<<<<<<< HEAD
 		return x* x;}		
+>>>>>>> origin/master
+=======
+		return x * x;}		
 >>>>>>> origin/master
 }
