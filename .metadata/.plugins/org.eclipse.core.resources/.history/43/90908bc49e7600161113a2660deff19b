@@ -1,5 +1,6 @@
 
 public class Calculate {
+<<<<<<< HEAD
 	//square
 	public static int square(int x){
 		return x * x;
@@ -29,12 +30,18 @@ public class Calculate {
 		return (y * y) - (4 * x * z);
 	}
 	//toImproperFrac
-	public static String toImproperFrac(int x, int y, int z){
-		return (x * z) + "//"+z;
+	public static void toImproperFrac(String[int x, int y, int z] args){
+		return (x * z) + "//z";"
 	}
 	//toMixedNum
-	public static String toMixedNum(int x, int y, int z){
-		return 
-	}
+	public 
 	//foil
+=======
+	public static int square(int x){
+<<<<<<< HEAD
+		return x* x;}		
+>>>>>>> origin/master
+=======
+		return x * x;}		
+>>>>>>> origin/master
 }
