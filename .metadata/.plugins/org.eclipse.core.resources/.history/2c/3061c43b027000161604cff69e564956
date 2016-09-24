@@ -1,6 +1,0 @@
-
-public class Calculate {
-	public int calculate;
-		int number = 5;
-		square = number * number;		
-}

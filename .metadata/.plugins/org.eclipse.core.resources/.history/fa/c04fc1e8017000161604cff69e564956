@@ -1,7 +1,0 @@
-
-public class Calculate {
-	public static void main(int[] args) {
-		int number = 5;
-		square = number * number;		
-	}
-}

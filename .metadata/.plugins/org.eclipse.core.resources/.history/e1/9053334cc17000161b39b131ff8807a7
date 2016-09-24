@@ -1,8 +1,0 @@
-
-public class DoMath {
-
-	public static void main(String[] args) {
-		print(Calculate.square(5));
-	}
-
-}
