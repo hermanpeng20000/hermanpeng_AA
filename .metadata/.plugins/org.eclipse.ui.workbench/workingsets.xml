@@ -11,5 +11,7 @@
 <item elementID="=Calculate Library" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
 </workingSet>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1472707835030_0" label="Window Working Set" name="Aggregate for window 1472707835029"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1474784110812_3" label="Window Working Set" name="Aggregate for window 1474784110812"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1474784126350_4" label="Window Working Set" name="Aggregate for window 1474784126350"/>
 <mruList name="1"/>
 </workingSetManager>
