@@ -52,15 +52,15 @@ public class Calculate {
 	 * form (a, b, and c) and returns the value of the discriminant. The method accepts three doubles and 
 	 * returns a double.
 	 */
-	public static double discriminant(double x, double y, double z){
-		return (y * y) - (4 * x * z);
+	public static double discriminant(double b, double a, double c){
+		return (b * b) - (4 * a * c);
 	}
 	/* toImproperFrac - A call to toImproperFrac converts mixed number (with its pieces provided separately 
 	 * in the order numerator then denominator) into a mixed number. The method accepts three integers and 
 	 * returns a String
 	 */
 	public static String toImproperFrac(int x, int y, int z){
-		return (x * z) + "//"+z;
+		return ((x * z) + y) + "/" + z;
 	}
 	/* toMixedNum - A call to toMixedNum converts an improper fraction (with its pieces provided separately 
 	 * in the order numerator then denominator) into a mixed number. The method accepts two integers and 
@@ -69,7 +69,7 @@ public class Calculate {
 	public static String toMixedNum(int x, int y){
 		int z = (x/y);
 		int a = (x % y);
-		String text = z + "//" + a;
+		String text = z + "_" + a + "/" + y;
 		return text;
 	}
 	/* foil - A call to foil converts a binomial multiplication of the form (ax + b)(cx + d) into a quadratic
@@ -77,7 +77,7 @@ public class Calculate {
 	 * String
 	 */
 	public static String foil(int w, int x, int y, int z, String text){
-		return (w * y) + text + "^2" + ((w * z) + (x * y)) + text + (x * z);
+		return (w * y) + text + "^2 + " + ((w * z) + (x * y)) + text + " + " + (x * z);
 	}
 	/* isDivisibleBy - A call to isDivisibleBy determines whether or not one integer is evenly divisible by 
 	 * another. The method accepts two integers and returns a boolean.
@@ -114,7 +114,7 @@ public class Calculate {
 	}
 	/* maxPt2 - Overload the max method. This one accepts three doubles and returns a double.
 	 */
-	public static double max(double x, int y, int z){
+	public static double max(double x, double y, double z){
 		if (x > y && x> z){
 			return x;
 		}
@@ -130,31 +130,30 @@ public class Calculate {
 	 */
 	public static int min(int x, int y){
 		if (x < y){
-			return y;
+			return x;
 		}
 		else{
-			return x;
+			return y;
 		}
 	}
 	/* round2 - A call to round2 rounds a double correctly to 2 decimal places and returns a double.
 	 */
 	public static double round2(double x){
-		double var = x;
-		var = (var * 100) + 0.5;
-		var = (double)var;
-		var = var/100;
-		return var;
+		x = (x * 100) + 0.5;
+		x = (int)x;
+		x = (double)x;
+		x = x/100;
+		return x;
 	}
 	/* exponent - A call to exponent raises a value to a positive integer power. The method accepts a 
 	 * double and an integer and returns a double. For the time being, you can assume that the exponent
 	 * is positive.
 	 */
 	public static double exponent(double x, int y){
-		double total = 1.0;
-		double counter = x;
-		while (x >= 0){
-			total = x * x;
-			counter--;
+		int i;
+		double multiplier = x;
+		for (i = 2; i <= y; i++){
+			x = x * multiplier;
 		}
 		return x;
 	}
@@ -175,10 +174,8 @@ public class Calculate {
 	public static boolean isPrime(int x){
 		boolean prime = true;
 		x = (int) absValue(x);
-		for (int i = 2; i < x; i++){
-			if (x%i == 0){
+		if (x % 2 == 0){
 				prime = false;
-			}
 		}
 		return prime;
 	}
@@ -188,9 +185,9 @@ public class Calculate {
 	 */
 	public static int gcf(int x, int y){
 		int gcf = 1;
-		for(int i = 1; i <= x; i++){
+		for(int i = 1; i <= y; i++){
 			if(isDivisibleBy(x, i) && isDivisibleBy(y,i)){
-				gcf = 1;
+				gcf = i;
 			}
 		}
 		return gcf;
@@ -201,15 +198,17 @@ public class Calculate {
 	 * and multiplication to find an appropriate value.)
 	 */
 	public static double sqrt(double x){
-		double y = 0;
-		double sqrt = x/2;
-		do{
-			y = sqrt;
-			sqrt = (y + (x/y))/2.0;
+		if (x < 0){
+			throw new IllegalArgumentException("Cannot root negatives");
 		}
-		while (y - sqrt != 0);
-		sqrt = round2(sqrt);
-		return sqrt;
+		double num;
+		double squareRoot = x/2;
+		do {
+			num = squareRoot;
+			squareRoot = (num + (x/num)) / 2;
+		}
+		while ((num - squareRoot) != 0);
+		return Calculate.round2(squareRoot);
 	}
 	/* quadForm - A call to quadform uses the coefficients of a quadratic equation in standard form and uses
 	 * the quadratic formula to approximate the real roots, if any. The method accepts three integers and
@@ -220,7 +219,7 @@ public class Calculate {
 		double positiveQuadratic = 0;
 		double negativeQuadratic = 0;
 		double variable = (b * b) - (4 * a * c);
-		if(a < 0 && sqrt(variable)<0){
+		if(a < 0 && sqrt(variable) < 0){
 			return "no real roots";
 		}
 		else{
@@ -228,7 +227,7 @@ public class Calculate {
 			negativeQuadratic = -b - sqrt(((b * b) - (4 * a * c)));
 		}
 		if(positiveQuadratic == negativeQuadratic){
-			return "" + positiveQuadaratic;
+			return "" + positiveQuadratic;
 		}
 		else{
 			return negativeQuadratic + " and " + positiveQuadratic;
