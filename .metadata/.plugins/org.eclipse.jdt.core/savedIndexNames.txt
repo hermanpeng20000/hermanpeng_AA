@@ -5,19 +5,9 @@ INDEX VERSION 1.129+/Users/HermanPeng/Desktop/hermanpeng_AA/.metadata/.plugins/o
 1271342938.index
 2972581616.index
 616739193.index
-<<<<<<< HEAD
-1833648217.index
-1510534497.index
-204893112.index
-2465022724.index
-2117113611.index
-2932191785.index
-3227702110.index
-=======
 2545238116.index
 624708564.index
 3157663476.index
->>>>>>> origin/master
 995153890.index
 820019804.index
 3321539481.index
@@ -38,12 +28,5 @@ INDEX VERSION 1.129+/Users/HermanPeng/Desktop/hermanpeng_AA/.metadata/.plugins/o
 3712507179.index
 3266567714.index
 3358580009.index
-<<<<<<< HEAD
-2763200912.index
-2545238116.index
-1931402068.index
-3302703152.index
-=======
 156905802.index
 576073405.index
->>>>>>> origin/master
