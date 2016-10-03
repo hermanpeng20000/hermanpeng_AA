@@ -1372,6 +1372,25 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 >>>>>>> origin/master
 !MESSAGE xcode-select: note: no developer tools were found at '/Applications/Xcode.app', requesting install. Choose an option in the dialog to download the command line developer tools.
 
+<<<<<<< HEAD
+
+!ENTRY org.eclipse.jdt.core 4 4 2016-09-24 23:17:16.839
+!MESSAGE Background Indexer Crash Recovery
+!STACK 0
+java.lang.OutOfMemoryError: Requested array size exceeds VM limit
+	at org.eclipse.jdt.internal.compiler.util.HashtableOfObject.<init>(HashtableOfObject.java:38)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.readCategoryTable(DiskIndex.java:663)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory(DiskIndex.java:466)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(DiskIndex.java:458)
+	at org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(DiskIndex.java:560)
+	at org.eclipse.jdt.internal.core.index.Index.save(Index.java:197)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndex(IndexManager.java:905)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes(IndexManager.java:947)
+	at org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(IndexManager.java:644)
+	at org.eclipse.jdt.internal.core.search.processing.JobManager.run(JobManager.java:377)
+	at java.lang.Thread.run(Thread.java:745)
+!SESSION 2016-09-26 20:51:38.041 -----------------------------------------------
+=======
 !SESSION 2016-09-24 23:13:28.262 -----------------------------------------------
 eclipse.buildId=4.6.0.I20160606-1100
 java.version=1.8.0_101
@@ -1571,6 +1590,7 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 8 more
 !SESSION 2016-09-26 20:37:33.071 -----------------------------------------------
+>>>>>>> origin/master
 eclipse.buildId=4.6.0.I20160606-1100
 java.version=1.8.0_101
 java.vendor=Oracle Corporation
@@ -1578,6 +1598,20 @@ BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
 Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/HermanPeng/.eclipse_keyring
 Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/HermanPeng/.eclipse_keyring
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.core.net 1 0 2016-09-26 20:52:42.703
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2016-09-26 20:52:51.555
+!MESSAGE xcode-select: note: no developer tools were found at '/Applications/Xcode.app', requesting install. Choose an option in the dialog to download the command line developer tools.
+
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2016-09-26 20:52:51.565
+!MESSAGE xcode-select: note: no developer tools were found at '/Applications/Xcode.app', requesting install. Choose an option in the dialog to download the command line developer tools.
+
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2016-09-26 20:52:52.767
+=======
 !ENTRY org.eclipse.core.net 1 0 2016-09-26 20:37:38.274
 !MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
 
@@ -1590,6 +1624,7 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.
 
 
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2016-09-26 20:37:44.776
+>>>>>>> origin/master
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.1.v20160605-1811
 !STACK 0
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10
