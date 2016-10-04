@@ -106,10 +106,10 @@ public class CollaborativeProject {
 			 * showing that no even number was given. */
 			if (maxEven == Integer.MIN_VALUE || totalEven == 0){
 				System.out.println("No Even Number Inputted");
+				totalEven = 0;
 				maxEven = 0;
 			}
 		}
-		
 		/* The information required to be printed out is then
 		 * printed out on the console and given to the user. */
 		System.out.println(" ");

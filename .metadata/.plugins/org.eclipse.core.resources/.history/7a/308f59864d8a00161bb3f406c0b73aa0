@@ -106,7 +106,6 @@ public class CollaborativeProject {
 			 * showing that no even number was given. */
 			if (maxEven == Integer.MIN_VALUE || totalEven == 0){
 				System.out.println("No Even Number Inputted");
-				maxEven = 0;
 			}
 		}
 		
