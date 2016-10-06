@@ -102,7 +102,7 @@ public class CollaborativeProject {
 			/* This if statement checks whether an even 
 			 * number was typed in. If not, it sets the
 			 * two variables regarding even numbers to 0,
-			 * which was previously stated to be the signal
+			 * which was preiously stated to be the signal
 			 * showing that no even number was given. */
 			if (maxEven == Integer.MIN_VALUE || totalEven == 0){
 				System.out.println("No Even Number Inputted");
