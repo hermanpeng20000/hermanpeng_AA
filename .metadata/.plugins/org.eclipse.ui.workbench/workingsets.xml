@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workingSetManager>
-<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1472789854073_1" label="1" name="1">
-<item elementID="=Hello World" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-<item elementID="=Access Calculate" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-<item elementID="=Calculate Library" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-</workingSet>
-<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1472789881510_2" label="2" name="2">
-<item elementID="=Hello World" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-<item elementID="=Access Calculate" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-<item elementID="=Calculate Library" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
-</workingSet>
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1472707835030_0" label="Window Working Set" name="Aggregate for window 1472707835029"/>
-<<<<<<< HEAD
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1474948367802_3" label="Window Working Set" name="Aggregate for window 1472696776437"/>
-=======
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1474784110812_3" label="Window Working Set" name="Aggregate for window 1474784110812"/>
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1474784126350_4" label="Window Working Set" name="Aggregate for window 1474784126350"/>
-<<<<<<< HEAD
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1475477118197_5" label="Window Working Set" name="Aggregate for window 1475477118197"/>
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1475477133374_6" label="Window Working Set" name="Aggregate for window 1475477133374"/>
-<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1475477326209_7" label="Window Working Set" name="Aggregate for window 1475477326209"/>
-=======
->>>>>>> origin/master
->>>>>>> origin/master
-<mruList name="1"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1476343030796_0" label="Window Working Set" name="Aggregate for window 1475477326209"/>
 </workingSetManager>

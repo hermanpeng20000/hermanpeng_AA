@@ -67,7 +67,7 @@ public class CollaborativeProject {
 			
 			/* The "parse" function changes the individual
 			 * String into an integer that will be sorted
-			 out in the rest of the loop. */
+			 * out in the rest of the loop. */
 			currentNumberLocation = Integer.parseInt(individualInputs[i]);
 			
 			/* This if statement checks whether the number
