@@ -53,13 +53,9 @@ public class StringSplit
 	 * to the user.
 	 */
 	public static String splitSandwichAtSpaces(String sandwichInput){
-		/* "finalAnswer" is the final variable that takes the results of the sandwich
-		 * and returns it to the main method, where it is printed.
-		 */
+		//starts with a space so if bread is at the beginning it won't impact the code
+		//AnswerToReturn is the final String answer
 		String finalAnswer = "";
-		/* 
-		 * 
-		 */
 		String withoutSpaces = "";
 		String [] sandwichBrokenDown = sandwichInput.split(" ");
 		//Adds all the parts of the String array to a new string
@@ -68,7 +64,7 @@ public class StringSplit
 		}
 		//Adds space to the end so ending with bread won't impact the code
 		withoutSpaces = " " + withoutSpaces;
-		withoutSpaces = withoutSpaces + " ";
+		withoutSpaces += " ";
 		String[] arrayBread = withoutSpaces.split("bread");
 		//Makes sure there is a sandwich
 		if(arrayBread.length <= 2){

@@ -47,20 +47,14 @@ public class StringSplit
 		System.out.println(splitBread("cheesebreadeggbaconbreadtomatoe"));
 	}
 	
-	/* This method takes input that contains spaces. The input is then determined
-	 * whether or not it has the ingredients and order to make a sandwich, and if so
-	 * the code will proceed to take items within the sandwich and return them 
-	 * to the user.
+	/* This method takes 
+	 * 
 	 */
 	public static String splitSandwichAtSpaces(String sandwichInput){
-		/* "finalAnswer" is the final variable that takes the results of the sandwich
-		 * and returns it to the main method, where it is printed.
-		 */
+		//starts with a space so if bread is at the beginning it won't impact the code
+		//AnswerToReturn is the final String answer
 		String finalAnswer = "";
-		/* 
-		 * 
-		 */
-		String withoutSpaces = "";
+		String withoutSpaces = "  ";
 		String [] sandwichBrokenDown = sandwichInput.split(" ");
 		//Adds all the parts of the String array to a new string
 		for (int i = 0; i < sandwichBrokenDown.length; i++){
@@ -68,7 +62,7 @@ public class StringSplit
 		}
 		//Adds space to the end so ending with bread won't impact the code
 		withoutSpaces = " " + withoutSpaces;
-		withoutSpaces = withoutSpaces + " ";
+		withoutSpaces += " ";
 		String[] arrayBread = withoutSpaces.split("bread");
 		//Makes sure there is a sandwich
 		if(arrayBread.length <= 2){
