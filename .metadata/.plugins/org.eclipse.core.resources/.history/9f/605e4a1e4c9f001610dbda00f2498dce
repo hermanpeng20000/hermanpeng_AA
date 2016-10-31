@@ -94,7 +94,7 @@ public class StringSplit
 				 * does not contain a sandwich, and returns the statment telling the user.
 				 */
 				if (arrayBread[i].equals("") && i == arrayBread.length - 2){
-					System.out.println("Ingredients entered are not a sandwich.");
+					System.out.print("Ingredients entered are not a sandwich.");
 				}
 				/* If the item being tested is proved to be part of a sandwich by the previous
 				 * code, it is added to the "finalAnswer" as part of the final return list.
@@ -120,49 +120,23 @@ public class StringSplit
 		 * and returns it to the main method, where it is printed.
 		 */
 		String finalAnswer = "";
-		/* "listOfIngredients" gets inputed all the main contents and is then processed
-		 * by the code to determine it's parts and items necessary to return.
-		 * Spaces are added before and after "listOfIngredients" as a safeguard for the
-		 * scenario where a bread is placed at the beginning or end of the code.
-		 */
 		String listOfIngredients = " " + breadInput + " ";
-		/* The array "arrayBraed" contains all the items of the sandwich, but proceeds
-		 * to split the original input based off of the location of "bread", thus riddding
-		 * the code of "bread" and leaving its remnants.
-		 */
+		// get rid of bread
 		String[] arrayBread = listOfIngredients.split("bread");
-		/* A sandwich must be comprised of at least 3 items, so this code verifies whether
-		 * or not there are items in between the breads, and thus whether or not it is a sandwich.
-		 */
+		// Makes sure it is a sandwich
 		if(arrayBread.length <= 2){
 			System.out.println("Ingredients entered are not a sandwich.");
-		/* The "if" statement was the most basic check for whether sandwich is valid or not,
-		 * this "else" statement serves to both verify if it is not a sandwich, but if it is
-		 * acts to return it to the main.
-		 */
 		}else{
-			for (int i = 1; i < arrayBread.length-1; i++){
-				/* Item being processed by the "for" loop is then added to the String 
-				 * "middleSandwich" where it will be further processed and set off.
-				 */
+			for (int i = 1; i <arrayBread.length-1; i++){
 				String middleSandwich = arrayBread[i];
-				/* In the scenario where breads in succession are determined, the code will
-				 * process the output so that a blank is released in its place.
-				 */
+				//If two breads are next to each other, there will be a space taking up an index of an Array
 				if(arrayBread[i].equals("")){
 					System.out.print("");
-				/* Once the items have been processed and determined proper for the conditions
-				 * of the sandwich, the item is added to the "finalAnswer" that will be returned
-				 * to the main and then printed.
-				 */
 				}else{
 					finalAnswer += middleSandwich;
 				}
 			}
 		}
-		/* Result is returned back to the main code where it will be alerted to the user
-		 * the ingredients of the sandwich.
-		 */	
 		return finalAnswer;
 	}
 }

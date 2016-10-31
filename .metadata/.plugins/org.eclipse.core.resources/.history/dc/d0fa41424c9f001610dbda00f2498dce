@@ -94,7 +94,7 @@ public class StringSplit
 				 * does not contain a sandwich, and returns the statment telling the user.
 				 */
 				if (arrayBread[i].equals("") && i == arrayBread.length - 2){
-					System.out.println("Ingredients entered are not a sandwich.");
+					System.out.print("Ingredients entered are not a sandwich.");
 				}
 				/* If the item being tested is proved to be part of a sandwich by the previous
 				 * code, it is added to the "finalAnswer" as part of the final return list.
