@@ -15,7 +15,7 @@ public class FracCalc {
 			input = console.nextLine();
 			answer = produceAnswer(input);
 			System.out.println(answer);
-		} while (input != "quit");
+		} while(input != "quit");
 	}
 	public static String produceAnswer(String inputFromMain){
 		String[] resultParseInput = parseInput(inputFromMain);
@@ -47,19 +47,14 @@ public class FracCalc {
 		if (fromParseInput[1] == "+"){
 			fromParseInput[1] = "1";
 		}
-		String[] firstOperand = fromParseInput[0].split("_");
-		firstOperand = fromParseInput[0].split("/");
-		String[] secondOperand = fromParseInput[2].split("_");
-		secondOperand = fromParseInput[2].split("/");
-		int[] fullExpressionBrokenDown = new int[7];
-		// MAKE FOR STATEMENT TO CONVERT EACH STRING INTO THINGS FOR INT ARRAY
-		for (int i = 0; i <= 2; i++){
-			fullExpressionBrokenDown[i] = Integer.parseInt(firstOperand[i]);
+		String stringVersionFromParseInput = fromParseInput.toString();
+		String[] separateOperand = stringVersionFromParseInput.split("_");
+		separateOperand = stringVersionFromParseInput.split("/");
+		int[] individualNumbers = new int[separateOperand.length];
+		for(int i=0; i < separateOperand.length; i++){
+	           individualNumbers[i]= Integer.parseInt(separateOperand[i]);
 		}
-		for (int i = 4; i <= 7; i++){
-			fullExpressionBrokenDown[i] = Integer.parseInt(secondOperand[i]);
-		}
-		return fullExpressionBrokenDown;
+		return individualNumbers;
 	}
 	public static int[] toImproperFrac(int[] operand){
 	int wholeNumber1 = operand[0];
