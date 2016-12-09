@@ -16,10 +16,11 @@ public class FracCalc {
 		} while (input != "quit");
 	}
 	public static String produceAnswer(String inputFromMain){
-		int operator = 0;
-		operator = inputFromMain.indexOf("+");
-		
+		int operator;
 		String[] resultParseInput = parseInput(inputFromMain);
+		if (resultParseInput[1] == "+"){
+			operator = 1;
+		}
 		int[] resultParseOperand = parseOperand(resultParseInput);
 		int[] resultToImproperFrac = toImproperFrac(resultParseOperand);
 		int[] resultCommonDenominator = commonDenominator(resultToImproperFrac);
@@ -49,7 +50,7 @@ public class FracCalc {
 		firstOperand = fromParseInput[0].split("/");
 		String[] secondOperand = fromParseInput[2].split("_");
 		secondOperand = fromParseInput[2].split("/");
-		int[] fullExpressionBrokenDown = new int[6];
+		int[] fullExpressionBrokenDown = new int[7];
 		for (int i = 0; i <= 2; i++){
 			fullExpressionBrokenDown[i] = Integer.parseInt(firstOperand[i]);
 		}

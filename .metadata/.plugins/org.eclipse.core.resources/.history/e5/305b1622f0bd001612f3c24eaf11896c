@@ -17,7 +17,7 @@ public class FracCalc {
 	}
 	public static String produceAnswer(String inputFromMain){
 		int operator = 0;
-		operator = inputFromMain.indexOf("+");
+		operator = inputFromMain.indexOf("+" || "-");
 		
 		String[] resultParseInput = parseInput(inputFromMain);
 		int[] resultParseOperand = parseOperand(resultParseInput);

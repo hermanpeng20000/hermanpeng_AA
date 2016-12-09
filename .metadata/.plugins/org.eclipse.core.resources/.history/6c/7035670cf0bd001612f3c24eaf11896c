@@ -17,9 +17,10 @@ public class FracCalc {
 	}
 	public static String produceAnswer(String inputFromMain){
 		int operator = 0;
-		operator = inputFromMain.indexOf("+");
-		
 		String[] resultParseInput = parseInput(inputFromMain);
+		if (resultParseInput[1] == "+"){
+			operator = 1;
+		}
 		int[] resultParseOperand = parseOperand(resultParseInput);
 		int[] resultToImproperFrac = toImproperFrac(resultParseOperand);
 		int[] resultCommonDenominator = commonDenominator(resultToImproperFrac);
