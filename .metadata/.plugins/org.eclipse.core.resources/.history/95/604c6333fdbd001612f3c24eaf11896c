@@ -28,13 +28,13 @@ public class FracCalc {
 		if (operator.equals("+")){
 			return addition(resultCommonDenominator);
 		}
-		else if (operator.equals("-")){
+		else if (resultCommonDenominator[3] == 2){
 			return subtraction(resultCommonDenominator);
 		}
-		else if (operator.equals("*")){
+		else if (resultCommonDenominator[3] == 3){
 			return multiplication(resultCommonDenominator);
 		}
-		else if (operator.equals("/")){
+		else if (resultCommonDenominator[3] == 4){
 			return division(resultCommonDenominator);
 		}
 		else {
@@ -62,34 +62,35 @@ public class FracCalc {
 		return improperFraction;
 	}
 	public static int[] commonDenominator(int[] leftOperand, int[] rightOperand){
-		int leftNumerator = leftOperand[0] * rightOperand[1];
-		int rightNumerator = rightOperand[0] * leftOperand[1];
-		int denominator = leftOperand[1] * rightOperand[1];
-		int[] twoCommonFractions = {leftNumerator, rightNumerator, denominator};
+		leftOperand[0] = leftOperand[0] * rightOperand[1];
+		rightOperand[0] = rightOperand[0] * leftOperand[1];
+		leftOperand[1] = leftOperand[1] * rightOperand[1];
+		rightOperand[1] = rightOperand[1] * leftOperand[1];
+		int[] twoCommonFractions = {leftOperand[0], leftOperand[1], rightOperand[0], rightOperand[1]};
 		return twoCommonFractions;
 	}
 	public static String addition(int[] expression){
-		int intNumerator = expression[0] + expression[1];
+		int intNumerator = expression[0] + expression[2];
 		String stringNumerator = Integer.toString(intNumerator);
-		String answerString = stringNumerator + "/" + expression[2];
+		String answerString = stringNumerator + "/" + expression[1];
 		return answerString;
 	}
 	public static String subtraction(int[] expression){
-		int intNumerator = expression[0] - expression[1];
+		int intNumerator = expression[0] - expression[2];
 		String stringNumerator = Integer.toString(intNumerator);
-		String answerString = stringNumerator + "/" + expression[2];
+		String answerString = stringNumerator + "/" + expression[1];
 		return answerString;
 	}
 	public static String multiplication(int[] expression){
-		int intNumerator = expression[0] * expression[1];
-		int intDenominator = expression[2] * expression[2];
+		int intNumerator = expression[0] * expression[2];
+		int intDenominator = expression[1] * expression[3];
 		String stringNumerator = Integer.toString(intNumerator);
 		String stringDenominator = Integer.toString(intDenominator);
 		String answerString = stringNumerator + "/" + stringDenominator;
 		return answerString;
 	}
 	public static String division(int[] expression){
-		int intNumerator = expression[0] * expression[2];
+		int intNumerator = expression[0] * expression[3];
 		int intDenominator = expression[1] * expression[2];
 		String stringNumerator = Integer.toString(intNumerator);
 		String stringDenominator = Integer.toString(intDenominator);
