@@ -1,0 +1,279 @@
+package fracCalc;
+
+import java.util.*;
+
+/* Herman Peng
+ * 1st period
+ * December 10th, 2016
+ * FracCalc Project
+ */
+
+/*
+ * Objective : The objective of this assignment is to create a calculator to compute
+ * arithmetic operations between integers and/or fractions and output the result as
+ * a reduced mixed fraction.
+ */
+public class FracCalc {
+	/*
+	 * Main : The main method is designed to coordinate the code. The two main functions
+	 * of the main method are to access user input and to keep a loop running until the
+	 * user requests to quit.
+	 */
+	public static void main(String[] args){
+		String input;
+		Scanner console = new Scanner(System.in);
+		do {
+			System.out.println("Please enter in your input. Type \"quit\" to exit.");
+			input = console.nextLine();
+			System.out.println(produceAnswer(input));
+		} while (input != "quit");
+	}
+	/*
+	 * produceAnswer : The produceAnswer method is the hub of processing. The method
+	 * responds to input from the main, and then seeks to call on the other methods
+	 * to find an answer to the user's input.
+	 */
+	public static String produceAnswer(String inputFromMain){
+		// Finds a series of results and designates each segmented part to its destination.
+		String[] resultParseInput = parseInput(inputFromMain);
+		// Diverging left from right operand. Also isolates operator.
+		String leftOperand = resultParseInput[0];
+		String operator = resultParseInput[1];
+		String rightOperand = resultParseInput[2];
+		int[] parsedLeftOperand = parseOperand(leftOperand);
+		int[] parsedRightOperand = parseOperand(rightOperand);
+		int[] improperFracLeftOperand = toImproperFrac(parsedLeftOperand);
+		int[] improperFracRightOperand = toImproperFrac(parsedRightOperand);
+		// Having left and right operand come together to form one array which is sent to calculate.
+		int[] resultCommonDenominator = commonDenominator(improperFracLeftOperand, improperFracRightOperand);
+		// Designated code for if the operator is for addition.
+		if (operator.equals("+")){
+			int[] improperAnswer = addition(resultCommonDenominator);
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);	
+		}
+		// Designated code for if the operator is for subtraction.
+		else if (operator.equals("-")){
+			int[] improperAnswer = subtraction(resultCommonDenominator);
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);
+		}
+		// Designated code for if the operator is for multiplication.
+		else if (operator.equals("*")){
+			int[] improperAnswer = multiplication(resultCommonDenominator);
+			// A number multiplied by zero will always be zero. This accounts for that.
+			if (improperAnswer[0] == 0 || improperAnswer[1] == 0){
+				return "0";
+			}
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);
+		}
+		// Designated code for if the operator is for division.
+		else if (operator.equals("/")){
+			int[] improperAnswer = division(resultCommonDenominator);
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);
+		}
+		// If for some reason an error occurred.
+		else {
+			String error = "Encountered unexpected error.";
+			return error;
+		}
+	}
+	/*
+	 * parseInput : The parseInput method separates the initial input from the
+	 * user. It separates by the spaces, resulting in "operand, operator, operand"
+	 * form. In produceAnswer, these segments are further processed by other methods.
+	 */
+	public static String[] parseInput(String userInput){
+		String[] separateOperandsOperators = userInput.split(" ");
+		return separateOperandsOperators;
+	}
+	/*
+	 * parseOperand : The parseOperand method separates input from parseInput. It
+	 * separates by "_" which separates whole number from fraction and by "/" which
+	 * separates numerator from denominator. It also takes into account different
+	 * scenarios. Only looks at one operand at a time.
+	 */
+	
+	public static int[] parseOperand(String operand){
+		String[] wholeNumber = operand.split("_");
+		// For scenarios where there is no whole number.
+		if (wholeNumber.length <= 1){
+			String[] splitNumeratorDenominator = wholeNumber[0].split("/");
+			// For scenario where there is no whole number and no fraction, operand is zero.
+			if (wholeNumber[0].equals("0")){
+				int[] operandIsZero = {0};
+				return operandIsZero;
+			}
+			// For scenario where there is no whole number, only a fraction.
+			else if (splitNumeratorDenominator.length == 2){
+				String[] threeDigitsSort = {"0", splitNumeratorDenominator[0], splitNumeratorDenominator[1]};
+				int[] operandIsFraction = new int[3];
+				for (int i=0; i < threeDigitsSort.length; i++) {
+			    	operandIsFraction[i] = Integer.parseInt(threeDigitsSort[i]);
+			    }
+				return operandIsFraction;
+			}
+			// For scenario where the entire operand is just a whole number, no fraction.
+			else {
+				int[] operandIsWholeNumber = {Integer.parseInt(operand)};
+				return operandIsWholeNumber;
+			}
+		}
+		// For "normal" scenario where operand has a whole number followed by a fraction.
+		else{
+			String[] splitNumeratorDenominator = wholeNumber[1].split("/");
+			String[] threeDigitsSort = {wholeNumber[0], splitNumeratorDenominator[0], splitNumeratorDenominator[1]};
+			int[] threeIntsInOrder = new int[3];
+		    for (int i=0; i < threeDigitsSort.length; i++) {
+		    	threeIntsInOrder[i] = Integer.parseInt(threeDigitsSort[i]);
+		    }
+		    return threeIntsInOrder;
+		}
+	}
+	/*
+	 * toImproperFrac : The toImproperFrac method takes in an operand from parseOperand
+	 * and converts it into improper fraction form - the preferred form for calculating.
+	 * Again, different scenarios are taken into account for.
+	 */
+	
+	public static int[] toImproperFrac(int[] operand){
+		// For scenario where operand is negative; converts to improper form appropriately.
+		if (operand[0] <= -1 && operand.length == 3){
+			operand[0] *= -1;
+			operand[1] = -1 * (operand[2] * operand[0] + operand[1]);
+			int[] operandIsNegative = {operand[1], operand[2]};
+			return operandIsNegative;
+		}
+		// For scenario where the operand has been determined in parseOperand to be zero.
+		else if (operand.length == 1 && operand[0] == 0){
+			int[] operandIsZero = {0,0};
+			return operandIsZero;
+		}
+		// For scenario where the operand has been determined in parseOperand to be a lone whole number
+		else if (operand.length == 1){
+			int[] operandIsWholeNumber = {operand[0], 1};
+			return operandIsWholeNumber;
+		}
+		// For "normal" scenario where the operand is in "whole number, numerator, denominator" form.
+		else{
+			operand[1] = operand[2] * operand[0] + operand[1];
+			int[] improperFraction = {operand[1], operand[2]};
+			return improperFraction;
+		}
+	}
+	/*
+	 * commonDenominator : The commonDenominator method takes the two improper form operands
+	 * from toImproperFrac and determines the commonDenominator between them. Again, takes 
+	 * into account different scenarios with different requirements. Returns an integer array
+	 * with three ints: the left numerator, the right denominator, and finally the shared denominator.
+	 */
+	
+	public static int[] commonDenominator(int[] leftOperand, int[] rightOperand){
+		// For scenario where the left operand is determined to be zero.
+		if (leftOperand[0] == 0){
+			int[] leftOperandIsZero = {0, rightOperand[0], rightOperand[1]};
+			return leftOperandIsZero;
+		}
+		// For scenario where the right operand is determined to be zero.
+		else if (rightOperand[0] == 0){
+			int[] rightOperandIsZero = {leftOperand[0], 0, leftOperand[1]};
+			return rightOperandIsZero;
+		}
+		// For "normal" scenario where both operands are improper fractions.
+		else{
+			int leftNumerator = leftOperand[0] * rightOperand[1];
+			int rightNumerator = rightOperand[0] * leftOperand[1];
+			int denominator = leftOperand[1] * rightOperand[1];
+			int[] twoCommonFractions = {leftNumerator, rightNumerator, denominator};
+			return twoCommonFractions;
+		}
+	}
+	/*
+	 * addition : The addition method takes the integer array from commonDenominator and 
+	 * utilizes it to determine the two fractions added. In fractional addition, in the case
+	 * where the denominators are the same (input is), add the two numerators together.
+	 */
+	
+	public static int[] addition(int[] expression){
+		// For scenario where left operand has previously been determined to be zero.
+		if (expression[0] == 0){
+			int[] leftOperandIsZero = {expression[1], expression[2]};
+			return leftOperandIsZero;
+		}
+
+		// For "normal" scenario where both numerators can be added together.
+		else{
+			int intNumerator = expression[0] + expression[1];
+			int[] answerInt = {intNumerator, expression[2]};
+			return answerInt;
+		}
+	}
+	/*
+	 * subtraction : The subtraction method takes the integer array from commonDenominator and 
+	 * utilizes it to determine the two fractions subtracted. In fractional subtraction,
+	 * in the case where the denominators are the same (input is), subtract the two numerators.
+	 */
+
+	
+	public static int[] subtraction(int[] expression){
+		int intNumerator = expression[0] - expression[1];
+		int[] answerInt = {intNumerator, expression[2]};
+		return answerInt;
+	}
+	
+	public static int[] multiplication(int[] expression){
+		int intNumerator = expression[0] * expression[1];
+		int intDenominator = expression[2] * expression[2];
+		int[] answerInt = {intNumerator, intDenominator};
+		if (answerInt[0] == 0 && answerInt[1] == 0){
+			answerInt[0] = 0; answerInt[1] = 0;
+			return answerInt;
+		}
+		return answerInt;
+	}
+	
+	public static int[] division(int[] expression){
+		int intNumerator = expression[0] * expression[2];
+		int intDenominator = expression[1] * expression[2];
+		int[] answerInt = {intNumerator, intDenominator};
+		return answerInt;
+	}
+	
+	public static String getWholeNumber(int[] improperResult){
+		int wholeNumber;
+		wholeNumber = improperResult[0]/improperResult[1];
+		String stringWholeNumber = Integer.toString(wholeNumber);
+		return stringWholeNumber;
+	}
+	
+	public static String reducedForm(String wholeNumber, int numerator, int denominator){
+		int reducedNumerator = numerator % denominator;
+		while (reducedNumerator % 2 == 0 && denominator % 2 == 0){
+			reducedNumerator = reducedNumerator/2;
+			denominator = denominator/2;
+		}
+		for (int i = 3; i <= 99; i = i + 2){
+			while (reducedNumerator % i == 0 && denominator % i == 0){
+				reducedNumerator = reducedNumerator/i;
+				denominator = denominator/i;
+			}
+		}
+		if (Integer.parseInt(wholeNumber) != 0){
+			reducedNumerator = Math.abs(reducedNumerator);
+		}
+		denominator = Math.abs(denominator);
+		Integer.toString(reducedNumerator);
+		String stringDenominator = Integer.toString(denominator);
+		if (reducedNumerator == 0){
+			return wholeNumber;
+		}
+		if (wholeNumber.equals("0")){
+			String fractionOnly = reducedNumerator + "/" + stringDenominator;
+			return fractionOnly;
+		}
+		String toPrintResult = wholeNumber + "_" + reducedNumerator + "/" + stringDenominator;
+		return toPrintResult;
+	}
+}

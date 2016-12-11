@@ -1,0 +1,216 @@
+package fracCalc;
+
+import java.util.*;
+
+/* Herman Peng
+ * 1st period
+ * December 5th, 2016
+ * StringSplit Assignment
+ */
+
+public class FracCalc {
+	public static void main(String[] args){
+		String input;
+		Scanner console = new Scanner(System.in);
+		do {
+			System.out.println("Please enter in your input. Type \"quit\" to exit.");
+			input = console.nextLine();
+			System.out.println(produceAnswer(input));
+		} while (input != "quit");
+	}
+	public static String produceAnswer(String inputFromMain){
+		String[] resultParseInput = parseInput(inputFromMain);
+		String leftOperand = resultParseInput[0];
+		String operator = resultParseInput[1];
+		String rightOperand = resultParseInput[2];
+		int[] parsedLeftOperand = parseOperand(leftOperand);
+		int[] parsedRightOperand = parseOperand(rightOperand);
+		int[] improperFracLeftOperand = toImproperFrac(parsedLeftOperand);
+		int[] improperFracRightOperand = toImproperFrac(parsedRightOperand);
+		int[] resultCommonDenominator = commonDenominator(improperFracLeftOperand, improperFracRightOperand);
+		if (operator.equals("+")){
+			int[] improperAnswer = addition(resultCommonDenominator);
+			if (leftOperand.equals("0")){
+				return rightOperand;
+			}
+			else if (rightOperand.equals("0")){
+				return leftOperand;
+			}
+			else if (parsedLeftOperand.length == 1 && parsedRightOperand.length == 1){
+				int twoWholeInts = parsedLeftOperand[0] + parsedRightOperand[0];
+				String twoWholeStrings = Integer.toString(twoWholeInts);
+				return twoWholeStrings;
+			}
+			else if (parsedLeftOperand[0] == 0){
+				String plusZeroLeft = getWholeNumber(improperFracRightOperand);
+				plusZeroLeft = reducedForm(plusZeroLeft, improperFracRightOperand[0], improperFracRightOperand[1]);
+				return plusZeroLeft;
+			}
+			else if (parsedRightOperand[0] == 0){
+				String plusZeroRight = getWholeNumber(improperFracLeftOperand);
+				plusZeroRight = reducedForm(plusZeroRight, improperFracLeftOperand[0], improperFracLeftOperand[1]);
+				return plusZeroRight;
+			}
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);
+		}
+		else if (operator.equals("-")){
+			int[] improperAnswer = subtraction(resultCommonDenominator);
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);
+		}
+		else if (operator.equals("*")){
+			int[] improperAnswer = multiplication(resultCommonDenominator);
+			if (improperAnswer[0] == 0 || improperAnswer[1] == 0){
+				return "0";
+			}
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);
+		}
+		else if (operator.equals("/")){
+			int[] improperAnswer = division(resultCommonDenominator);
+			String wholeNumber = getWholeNumber(improperAnswer);
+			return reducedForm(wholeNumber, improperAnswer[0], improperAnswer[1]);
+		}
+		else {
+			String error = "Encountered unexpected error.";
+			return error;
+		}
+	}
+	public static String[] parseInput(String userInput){
+		String[] separateOperandsOperators = userInput.split(" ");
+		return separateOperandsOperators;
+	}
+	public static int[] parseOperand(String operand){
+		String[] wholeNumber = operand.split("_");
+		if (wholeNumber.length <= 1){
+			String[] splitNumeratorDenominator = wholeNumber[0].split("/");
+			if (wholeNumber[0].equals("0")){
+				int[] operandIsZero = {0};
+				return operandIsZero;
+			}
+			else if (splitNumeratorDenominator.length == 2){
+				String[] threeDigitsSort = {"0", splitNumeratorDenominator[0], splitNumeratorDenominator[1]};
+				int[] operandIsFraction = new int[3];
+				for (int i=0; i < threeDigitsSort.length; i++) {
+			    	operandIsFraction[i] = Integer.parseInt(threeDigitsSort[i]);
+			    }
+				return operandIsFraction;
+			}
+			else {
+				int[] operandIsWholeNumber = {Integer.parseInt(operand)};
+				return operandIsWholeNumber;
+			}
+		}
+		else{
+			String[] splitNumeratorDenominator = wholeNumber[1].split("/");
+			String[] threeDigitsSort = {wholeNumber[0], splitNumeratorDenominator[0], splitNumeratorDenominator[1]};
+			int[] threeIntsInOrder = new int[3];
+		    for (int i=0; i < threeDigitsSort.length; i++) {
+		    	threeIntsInOrder[i] = Integer.parseInt(threeDigitsSort[i]);
+		}
+		    return threeIntsInOrder;
+		}
+	}
+	public static int[] toImproperFrac(int[] operand){
+		if (operand[0] <= -1 && operand.length == 3){
+			operand[0] *= -1;
+			operand[1] = -1 * (operand[2] * operand[0] + operand[1]);
+			int[] operandIsNegative = {operand[1], operand[2]};
+			return operandIsNegative;
+		}
+		else if (operand.length == 1 && operand[0] == 0){
+			int[] operandIsZero = {0,0};
+			return operandIsZero;
+		}
+		else if (operand.length == 1){
+			int[] operandIsWholeNumber = {operand[0], 1};
+			return operandIsWholeNumber;
+		}
+		else{
+			operand[1] = operand[2] * operand[0] + operand[1];
+			int[] improperFraction = {operand[1], operand[2]};
+			return improperFraction;
+		}
+	}
+	public static int[] commonDenominator(int[] leftOperand, int[] rightOperand){
+		if (leftOperand[0] == 0){
+			int[] leftOperandIsZero = {0, rightOperand[0], rightOperand[1]};
+			return leftOperandIsZero;
+		}
+		else if (rightOperand[0] == 0){
+			int[] rightOperandIsZero = {leftOperand[0], 0, leftOperand[1]};
+			return rightOperandIsZero;
+		}
+		else{
+			int leftNumerator = leftOperand[0] * rightOperand[1];
+			int rightNumerator = rightOperand[0] * leftOperand[1];
+			int denominator = leftOperand[1] * rightOperand[1];
+			int[] twoCommonFractions = {leftNumerator, rightNumerator, denominator};
+			return twoCommonFractions;
+		}
+	}
+	public static int[] addition(int[] expression){
+		if (expression[0] == 0){
+			int[] leftOperandIsZero = {expression[1], expression[2]};
+			return leftOperandIsZero;
+		}
+		else if (expression[1] == 0){
+			int[] rightOperandIsZero = {expression[0], expression[2]};
+			return rightOperandIsZero;
+		}
+		else{
+			int intNumerator = expression[0] + expression[1];
+			int[] answerInt = {intNumerator, expression[2]};
+			return answerInt;
+		}
+	}
+	public static int[] subtraction(int[] expression){
+		int intNumerator = expression[0] - expression[1];
+		int[] answerInt = {intNumerator, expression[2]};
+		return answerInt;
+	}
+	public static int[] multiplication(int[] expression){
+		int intNumerator = expression[0] * expression[1];
+		int intDenominator = expression[2] * expression[2];
+		int[] answerInt = {intNumerator, intDenominator};
+		if (answerInt[0] == 0 && answerInt[1] == 0){
+			answerInt[0] = 0; answerInt[1] = 0;
+			return answerInt;
+		}
+		return answerInt;
+	}
+	public static int[] division(int[] expression){
+		int intNumerator = expression[0] * expression[2];
+		int intDenominator = expression[1] * expression[2];
+		int[] answerInt = {intNumerator, intDenominator};
+		return answerInt;
+	}
+	public static String getWholeNumber(int[] improperResult){
+		int wholeNumber;
+		if (improperResult[0] > improperResult[1]){
+			wholeNumber = improperResult[0]/improperResult[1];
+			Integer.toString(wholeNumber);
+			return Integer.toString(wholeNumber);
+		}
+		else {
+			wholeNumber = 0;
+			return Integer.toString(wholeNumber);
+		}
+	}
+	public static String reducedForm(String wholeNumber, int numerator, int denominator){
+		int reducedNumerator = numerator % denominator;
+		while (reducedNumerator % 2 == 0 && denominator % 2 == 0){
+			reducedNumerator = reducedNumerator/2;
+			denominator = denominator/2;
+		}
+		while (reducedNumerator % 3 == 0 && denominator % 3 == 0){
+			reducedNumerator = reducedNumerator/3;
+			denominator = denominator/3;
+		}
+		Integer.toString(reducedNumerator);
+		String stringDenominator = Integer.toString(denominator);
+		String toPrintResult = wholeNumber + "_" + reducedNumerator + "/" + stringDenominator;
+		return toPrintResult;
+	}
+}
