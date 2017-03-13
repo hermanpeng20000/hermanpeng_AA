@@ -1,0 +1,21 @@
+package textExcel;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+// Update this file with your own code.
+
+public class TextExcel
+{
+
+	public static void main(String[] args)
+	{
+		for (int i = 0; i < 20; i++){
+			EmptyCell[] newExcel = new EmptyCell[20];
+			System.out.print(newExcel[i]);
+			System.out.print("|");
+		}
+		
+	    // Add your command loop here
+	}
+}
