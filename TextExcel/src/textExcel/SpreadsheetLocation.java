@@ -22,7 +22,7 @@ public class SpreadsheetLocation implements Location
     
     public SpreadsheetLocation(String cellName)
     {
-        String [] array=split(cellName);
+        String [] array = split(cellName);
         char temp=array[0].charAt(0);
         col=(int)temp-(int)'A';
         row=Integer.parseInt(array[1])-1;

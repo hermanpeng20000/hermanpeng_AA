@@ -20,19 +20,18 @@ public class Spreadsheet implements Grid
 	
 
 	@Override
-	public String processCommand(String command)
-	{
+	public String processCommand(String command) {
 		String[] commandArray = command.split(" ");
-		if (commandArray[0].contains("clear")){
-			if(commandArray.length == 1){
-				clearEntireCell();
-				return getGridText();
-			} else{
-				clearOneCell(commandArray[1].toUpperCase());
-				return getGridText();
-			}
+		if(command.equals("")){
+			return "";
 		}
-		if(commandArray.length==1){
+		else if (command.equalsIgnoreCase("clear")){
+			clearEntireCell();
+			return getGridText();
+		} else if (commandArray[0].equalsIgnoreCase("clear") && commandArray[1].length() <= 3){
+			clearOneCell(commandArray[1].toUpperCase());
+			return getGridText();
+		} else if(commandArray.length == 1){
 			String upCommand=commandArray[0].toUpperCase();
 			String [] array=splitCommand(upCommand);
 			char temp=array[0].charAt(0);
@@ -40,24 +39,24 @@ public class Spreadsheet implements Grid
 			rows=Integer.parseInt(array[1])-1;
 			return getSheet()[rows][columns].fullCellText();
 		}else{		
-			commandArray[0] = commandArray[0].toUpperCase();
-			if(command.length()==0){
-				return "";
-			} else if(commandArray.length >= 3){
-				String userInput = commandArray[2];
-				int counter = 3;
-				while(counter < commandArray.length){
-					userInput += " " + commandArray[counter];
-					counter++;
-				}
-				String cell = commandArray[0];
-				cellAssignment(userInput, cell);
-				return getGridText();
-			}else if(command.length() < 3){
-				return cellInspection(commandArray[0]);
+		commandArray[0] = commandArray[0].toUpperCase();
+		if(command.length()==0){
+			return "";
+		} else if(commandArray.length >= 3){
+			String userInput = commandArray[2];
+			int counter = 3;
+			while(counter < commandArray.length){
+				userInput += " " + commandArray[counter];
+				counter++;
 			}
+			String cell = commandArray[0];
+			cellAssignment(userInput, cell);
+			return getGridText();
+		}else if(command.length() < 3){
+			return cellInspection(commandArray[0]);
 		}
-		return "";
+	}
+	return "";
 	}
 
 	public String[] splitCommand(String command){
