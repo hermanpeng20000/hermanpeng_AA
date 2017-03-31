@@ -12,7 +12,6 @@ public class TextCell implements Cell {
 	}
 	public String abbreviatedCellText() {
 		String str = contents;
-		int cellValueLength = contents.length();
 		if (contents.length() < 10){
 			while (str.length() < 10){
 				str += " ";

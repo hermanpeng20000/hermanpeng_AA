@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="A_Checkpoint2" project="TextExcel" tests="18" started="18" failures="0" errors="0" ignored="0">
+  <testsuite name="textExcel.TestsALL.A_Checkpoint2" time="0.448">
+    <testcase name="testProcessCommandInspection" classname="textExcel.TestsALL.A_Checkpoint2" time="0.005"/>
+    <testcase name="testLongStringCellNoSpaces" classname="textExcel.TestsALL.A_Checkpoint2" time="0.004"/>
+    <testcase name="testLowerCaseCellProcessInspection" classname="textExcel.TestsALL.A_Checkpoint2" time="0.013"/>
+    <testcase name="testClearLocation" classname="textExcel.TestsALL.A_Checkpoint2" time="0.014"/>
+    <testcase name="testClear" classname="textExcel.TestsALL.A_Checkpoint2" time="0.005"/>
+    <testcase name="testProcessCommandSpecialStrings" classname="textExcel.TestsALL.A_Checkpoint2" time="0.041"/>
+    <testcase name="testEmptyGridText" classname="textExcel.TestsALL.A_Checkpoint2" time="0.027"/>
+    <testcase name="testEmptyStringCell" classname="textExcel.TestsALL.A_Checkpoint2" time="0.003"/>
+    <testcase name="testProcessCommand" classname="textExcel.TestsALL.A_Checkpoint2" time="0.042"/>
+    <testcase name="testDifferentCellTypes" classname="textExcel.TestsALL.A_Checkpoint2" time="0.073"/>
+    <testcase name="testMixedCaseClear" classname="textExcel.TestsALL.A_Checkpoint2" time="0.068"/>
+    <testcase name="textNonliteralClear" classname="textExcel.TestsALL.A_Checkpoint2" time="0.033"/>
+    <testcase name="testProcessCommandMoreSpecialStrings" classname="textExcel.TestsALL.A_Checkpoint2" time="0.089"/>
+    <testcase name="testLowerCaseCellAssignment" classname="textExcel.TestsALL.A_Checkpoint2" time="0.004"/>
+    <testcase name="testLongShortStringCell" classname="textExcel.TestsALL.A_Checkpoint2" time="0.003"/>
+    <testcase name="testEmptyGridCells" classname="textExcel.TestsALL.A_Checkpoint2" time="0.007"/>
+    <testcase name="testMixedCaseClearLocation" classname="textExcel.TestsALL.A_Checkpoint2" time="0.006"/>
+    <testcase name="testShortStringCell" classname="textExcel.TestsALL.A_Checkpoint2" time="0.008"/>
+  </testsuite>
+</testrun>

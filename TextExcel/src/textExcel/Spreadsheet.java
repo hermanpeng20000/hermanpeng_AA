@@ -9,6 +9,7 @@ public class Spreadsheet implements Grid
 	private char[] alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
 	private Cell[][] sheet = new Cell[rows][columns];
 	private String name = "";
+	private String nullStr="          ";
 
 	public Spreadsheet() {
 		for(int i=0;i<rows;i++){
@@ -20,43 +21,45 @@ public class Spreadsheet implements Grid
 	
 
 	@Override
-	public String processCommand(String command) {
+	public String processCommand(String command)
+	{
 		String[] commandArray = command.split(" ");
-		if(command.equals("")){
-			return "";
+		if (commandArray[0].equalsIgnoreCase("clear")){
+			if(commandArray.length == 1){
+				clearEntireCell();
+				return getGridText();
+			} else{
+				clearOneCell(commandArray[1].toUpperCase());
+				return getGridText();
+			}
 		}
-		else if (command.equalsIgnoreCase("clear")){
-			clearEntireCell();
-			return getGridText();
-		} else if (commandArray[0].equalsIgnoreCase("clear") && commandArray[1].length() <= 3){
-			clearOneCell(commandArray[1].toUpperCase());
-			return getGridText();
-		} else if(commandArray.length == 1){
+		if(commandArray.length==1){
 			String upCommand=commandArray[0].toUpperCase();
-			String [] array=splitCommand(upCommand);
+			String[] array=splitCommand(upCommand);
 			char temp=array[0].charAt(0);
 			columns=(int)temp-(int)'A';
 			rows=Integer.parseInt(array[1])-1;
 			return getSheet()[rows][columns].fullCellText();
-		}else{		
-		commandArray[0] = commandArray[0].toUpperCase();
-		if(command.length()==0){
-			return "";
-		} else if(commandArray.length >= 3){
-			String userInput = commandArray[2];
-			int counter = 3;
-			while(counter < commandArray.length){
-				userInput += " " + commandArray[counter];
-				counter++;
+			
+		}else{
+			commandArray[0] = commandArray[0].toUpperCase();
+			if(command.length()==0){
+				return "";
+			} else if(commandArray.length >= 3){
+				String userInput = commandArray[2];
+				int counter = 3;
+				while(counter < commandArray.length){
+					userInput += " " + commandArray[counter];
+					counter++;
+				}
+				String cell = commandArray[0];
+				cellAssignment(userInput, cell);
+				return getGridText();
+			}else if(command.length() < 3){
+				return cellInspection(commandArray[0]);
 			}
-			String cell = commandArray[0];
-			cellAssignment(userInput, cell);
-			return getGridText();
-		}else if(command.length() < 3){
-			return cellInspection(commandArray[0]);
 		}
-	}
-	return "";
+		return "";
 	}
 
 	public String[] splitCommand(String command){
@@ -82,7 +85,15 @@ public class Spreadsheet implements Grid
 	
 	public void cellAssignment(String input, String cell){
 		SpreadsheetLocation b = new SpreadsheetLocation(cell);
-		sheet[b.getRow()][b.getCol()] = new TextCell(input);
+		if(input.contains("\"")){
+			sheet[b.getRow()][b.getCol()] = new TextCell(input);
+		}else if(input.contains("%")){
+			sheet[b.getRow()][b.getCol()] = new PercentCell(input);
+		}else if(input.contains("(") && input.contains(")")){
+			sheet[b.getRow()][b.getCol()] = new FormulaCell(input);
+		}else{
+			sheet[b.getRow()][b.getCol()] = new ValueCell(input);
+		}
 	}
 	
 
@@ -118,6 +129,7 @@ public class Spreadsheet implements Grid
 	public String getGridText()
 	{
 		String grid = "   |";
+		String cellStr=null;
 		
 		//fills in the top row with the letters
 		for(int i = 0; i < columns; i++){
@@ -141,7 +153,12 @@ public class Spreadsheet implements Grid
 				//includes the dashed lines at the end, only lets first 10 characters show
 				//Puts the cell with its values in the grid
 				//i-1 because i started at 1 for numbering but arrays are zero based
-				grid += sheet[i-1][k].abbreviatedCellText() + "|";
+				if(sheet[i-1][k].abbreviatedCellText()==""){
+					cellStr=nullStr;
+				}else{
+					cellStr=sheet[i-1][k].abbreviatedCellText();
+				}
+				grid += cellStr + "|";
 			}
 		}
 		grid += "\n";// adds a new line after finishing creating the grid
