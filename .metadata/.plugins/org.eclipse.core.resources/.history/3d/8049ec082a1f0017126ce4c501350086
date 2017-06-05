@@ -1,0 +1,35 @@
+package textExcel;
+
+// Extends Location, and expands it
+public class SpreadsheetLocation implements Location
+{
+	// Initializes the ints necessary for describing graph location
+	private int col;
+	private int row;
+	// Returns the row and column, from parent
+    public int getRow()
+    {
+        return row;
+    }
+    public int getCol()
+    {
+        return col;
+    }
+    
+    // When given the location name in original form, breaks down name to find location
+    public SpreadsheetLocation(String cellName)
+    {
+    	// Splits the first half from second 
+        String [] nameArray = split(cellName);
+        // Sets up an initial location to base new location off of
+        int initial = nameArray[0].charAt(0);
+        col = initial - (int)'A';
+        row = Integer.parseInt(nameArray[1])-1;
+    }
+    
+    public String[] split(String cellName){
+    	
+    	return cellName.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+    }
+
+}

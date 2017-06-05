@@ -1,0 +1,38 @@
+package textExcel;
+
+// RealCell implements Cell, sets a skeleton for other cell types
+public abstract class RealCell implements Cell {
+
+	private String value;
+	
+	// Allows inputed value to be saved in the private String
+	public RealCell (String inputValue){		
+		value = inputValue;
+	}
+
+	// For text to fit in the alloted space
+	public String abbreviatedCellText() {
+		// For situation where cell text is larger than alloted space, returns the substring of text up to the final alloted space
+		if (fullCellText().length() > 10){
+			return fullCellText().substring(0,10);
+		// For situation where cell text is smaller than alloted space, returns the text with additional spaces to fill up space
+		}else {
+			String finalString = fullCellText();
+			while (finalString.length() < 10){
+				finalString += " ";
+			}
+			return finalString;
+		}
+	}
+
+	@Override
+	public String fullCellText() {
+		return value;								//acts as a getter and returns the string field
+	}
+	
+	
+	public double getDoubleValue(){
+		return Double.parseDouble(value);			//returns cell type
+	}
+
+}

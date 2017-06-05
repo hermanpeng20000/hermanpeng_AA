@@ -1,61 +1,73 @@
 package textExcel;
 
-// Update this file with your own code.
-
+// The Spreadsheet implements the Grid class
 public class Spreadsheet implements Grid
 {
+	// Initialization of the rows and columns ints that form the sheet
 	private int rows = 20;
 	private int columns = 12;
-	private char[] alphabet = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G' };
+	// Creation of the multi-dimensional array of Cells that are the length and height of the rows and columns ints
 	private Cell[][] sheet = new Cell[rows][columns];
-	private String name = "";
-	private String nullStr="          ";
+	private String nullString = "          ";
 
+	// Makes every cell in the sheet an Empty Cell
 	public Spreadsheet() {
-		for(int i=0;i<rows;i++){
-			for(int j=0;j<columns;j++){
-				sheet[i][j]=new EmptyCell();
+		// Use of two for-loops to make sure every cell is converted into Empty Cell
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				sheet[i][j] = new EmptyCell();
 			}
 		}
 	}
 	
 
-	@Override
-	public String processCommand(String command)
-	{
+	// Receives the commands and processes it
+	public String processCommand(String command){
+		// Receives the long phrase of commands, and splits it into individual orders by removing spaces
 		String[] commandArray = command.split(" ");
+		// For situation where the command is to clear the cell
 		if (commandArray[0].equalsIgnoreCase("clear")){
-			if(commandArray.length == 1){
+			// For situation where command is to clear entire sheet
+			if (commandArray.length == 1){
 				clearEntireCell();
 				return getGridText();
-			} else{
+			} 
+			// For situation where command is to clear an individual cell
+			else{
 				clearOneCell(commandArray[1].toUpperCase());
 				return getGridText();
 			}
 		}
-		if(commandArray.length==1){
-			String upCommand=commandArray[0].toUpperCase();
-			String[] array=splitCommand(upCommand);
-			char temp=array[0].charAt(0);
-			columns=(int)temp-(int)'A';
-			rows=Integer.parseInt(array[1])-1;
+		// For other situations where there is only one command inputed
+		if (commandArray.length == 1){
+			// Reads current command
+			String currentCommand = commandArray[0].toUpperCase();
+			// Calls Split Command from within Spreadsheet class
+			String[] array = splitCommand(currentCommand);
+			char temporary = array[0].charAt(0);
+			// Forms new inputs for column and rows
+			columns = (int)temporary-(int)'A';
+			rows = Integer.parseInt(array[1])-1;
+			// Returns updated sheet
 			return getSheet()[rows][columns].fullCellText();
-			
-		}else{
+		}
+		else{
+			// Makes sure command is in upper case, to make sure all code can read it
 			commandArray[0] = commandArray[0].toUpperCase();
-			if(command.length()==0){
+			// For scenario where nothing has been inputed
+			if (command.length() == 0){
 				return "";
-			} else if(commandArray.length >= 3){
-				String userInput = commandArray[2];
-				int counter = 3;
-				while(counter < commandArray.length){
-					userInput += " " + commandArray[counter];
-					counter++;
-				}
+			} 
+			else if(commandArray.length >= 3){
 				String cell = commandArray[0];
-				cellAssignment(userInput, cell);
+				String stringLong = commandArray[2];
+				for (int i = 3; i < commandArray.length; i++) {
+					stringLong += " " + commandArray[i];
+				}
+				cellAssignment(stringLong, cell);
 				return getGridText();
-			}else if(command.length() < 3){
+			}
+			else if(command.length() < 3){
 				return cellInspection(commandArray[0]);
 			}
 		}
@@ -70,49 +82,67 @@ public class Spreadsheet implements Grid
 	
 
 	@Override
+	// Getter to return rows
 	public int getRows()
 	{
-		
 		return rows;
 	}
 
 	@Override
+	// Getter to return columns
 	public int getCols()
 	{
-		// TODO Auto-generated method stub
 		return columns;
 	}
 	
+	// Used to assign cell to appropriate type according to inputed command
 	public void cellAssignment(String input, String cell){
-		SpreadsheetLocation b = new SpreadsheetLocation(cell);
+		SpreadsheetLocation location = new SpreadsheetLocation(cell);
+		// If input contains "\" we know that the cell should be a Text Cell
 		if(input.contains("\"")){
-			sheet[b.getRow()][b.getCol()] = new TextCell(input);
-		}else if(input.contains("%")){
-			sheet[b.getRow()][b.getCol()] = new PercentCell(input);
-		}else if(input.contains("(") && input.contains(")")){
-			sheet[b.getRow()][b.getCol()] = new FormulaCell(input);
-		}else{
-			sheet[b.getRow()][b.getCol()] = new ValueCell(input);
+			sheet[location.getRow()][location.getCol()] = new TextCell(input);
+		}
+		// If input contains "(" we know that the cell should be a Formula Cell
+		else if(input.contains("(") && input.contains(")")){
+			sheet[location.getRow()][location.getCol()] = new FormulaCell(input, this);
+		}
+		// If input contains "%" we know that the cell should be a Percent Cell
+		else if(input.contains("%")){
+			sheet[location.getRow()][location.getCol()] = new PercentCell(input);
+		}
+		// If input does not contain "\" or "%" or "(" then we can conclude it is a Value Cell
+		else{
+			sheet[location.getRow()][location.getCol()] = new ValueCell(input);
 		}
 	}
 	
 
 	@Override
+	// Returns the individual cell from the full sheet
 	public Cell getCell(Location loc){
 		return sheet[loc.getRow()][loc.getCol()];
 	}
 	
+	// Returns the location from a spreadsheet
+	public SpreadsheetLocation getLoc(String command) {
+		SpreadsheetLocation location = new SpreadsheetLocation(command);
+		return location;
+	}
+	
+	// Checks if the location of a cell is correct, thus inspecting it
 	public String cellInspection(String cell){
-		SpreadsheetLocation a = new SpreadsheetLocation(cell);
-		String result = sheet[a.getRow()][a.getCol()].fullCellText();
+		SpreadsheetLocation cellInspector = new SpreadsheetLocation(cell);
+		String result = sheet[cellInspector.getRow()][cellInspector.getCol()].fullCellText();
 		return result;
 	}
 	
+	// Command to clear one individual cell, converts it into an Empty Cell
 	public void clearOneCell(String cell){
-		SpreadsheetLocation userInput = new SpreadsheetLocation(cell);
-		sheet[userInput.getRow()][userInput.getCol()] = new EmptyCell();
+		SpreadsheetLocation toBeCleared = new SpreadsheetLocation(cell);
+		sheet[toBeCleared.getRow()][toBeCleared.getCol()] = new EmptyCell();
 	}
 	
+	// Command to clear entire grid, utilizes two for loops to convert 
 	public void clearEntireCell(){
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < columns; j++){
@@ -121,47 +151,49 @@ public class Spreadsheet implements Grid
 		}
 	}
 	
+	// Getter to return grid
 	public Cell[][] getSheet(){
 		return sheet;
 	}
 
 	@Override
+	// Getter to return grid text
 	public String getGridText()
 	{
 		String grid = "   |";
-		String cellStr=null;
+		String cellString = null;
 		
-		//fills in the top row with the letters
+		// Fills top row with appropriate letters
 		for(int i = 0; i < columns; i++){
-			//cast to character type for letters, add the 10 spaces between this and the next one
+			// Casts letters as chars, and adds ten spaces following it 
 			grid += (char) ('A' + i) + "         |";
 		}
 		
-		//fills in the grid
+		// Fills the grid
 		for(int i = 1; i <= rows; i++){
 			//makes new line at end of row and adds the number
 			grid += "\n" + i;
-			//fixes the spacing when the numbers hit double digits
+			// Adjusts spacing, accounting for double digit numbers
 			if(i >= 10){
 				grid += " |";
-			}else{
+			}
+			else{
 				grid += "  |";
 			}
 			
-			//sets all the values of each part of the array
+			// Sets all the values
 			for(int k = 0; k < columns; k++){
-				//includes the dashed lines at the end, only lets first 10 characters show
-				//Puts the cell with its values in the grid
-				//i-1 because i started at 1 for numbering but arrays are zero based
-				if(sheet[i-1][k].abbreviatedCellText()==""){
-					cellStr=nullStr;
-				}else{
-					cellStr=sheet[i-1][k].abbreviatedCellText();
+				if(sheet[i-1][k].abbreviatedCellText() == ""){
+					cellString = nullString;
 				}
-				grid += cellStr + "|";
+				else{
+					cellString = sheet[i-1][k].abbreviatedCellText();
+				}
+				grid += cellString + "|";
 			}
 		}
-		grid += "\n";// adds a new line after finishing creating the grid
+		// Adds new line for clarity, then returns it
+		grid += "\n";
 		return grid;
 
 		

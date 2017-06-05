@@ -1,0 +1,194 @@
+package textExcel;
+
+// Spreadsheet extends Grid
+public class Spreadsheet implements Grid
+{
+	// Sets up parameters of the grid
+	private int rows = 20;
+	private int columns = 12;
+	// Creates the Excel sheet
+	private Cell[][] excel = new Cell[rows][columns];
+	private String blankString = "          ";
+
+	// Creates a spreadsheet full of empty cells
+	public Spreadsheet() {
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < columns; j++){
+				excel[i][j]=new EmptyCell();
+			}
+		}
+	}
+	
+
+	public String processCommand(String command)
+	{
+		// In scenario where a blank is entered, returns the blank
+		if (command.equals("")){
+			return "";
+		}
+		
+		// Splits the command along spaces, to separate the commands. Forms separate commands into an array
+		String[] commandArray = command.split(" ");
+		// For the "clear" command that makes the cell blank
+		// Ignores case so that any arrangement of cases for typing commands has no effect
+		if (commandArray[0].equalsIgnoreCase("clear")){
+			// Recognizes that if there is a singular clear command, it should get rid of grid as a whole
+			if(commandArray.length == 1){
+				clearGrid();
+				return getGridText();
+			} else{
+				clearOneCell(commandArray[1].toUpperCase());
+				return getGridText();
+			}
+		}
+		
+		// For scenario where there is a singular command
+		if(commandArray.length == 1){
+			// Sets a string to the singular command
+			String singleCommand = commandArray[0].toUpperCase();
+			String[] splitCommandString = splitCommand(singleCommand);
+			// Sets up an initial location to base new location off of
+			int initial = splitCommandString[0].charAt(0);
+			// Finds new column 
+			columns = initial - (int)'A';
+			// Finds new row
+			rows = Integer.parseInt(splitCommandString[1])-1;
+			// Returns result
+			return getSheet()[rows][columns].fullCellText();
+		
+		// For scenarios where there is more than a single command
+		}else{
+			commandArray[0] = commandArray[0].toUpperCase();
+			if (commandArray.length >= 3){
+				// Initially sets userInput to 3rd value
+				String userInput = commandArray[2];
+				int counter = 3;
+				// Combines the following commands after the 3rd value through loop
+				while (counter < commandArray.length){
+					userInput += " " + commandArray[counter];
+					counter++;
+				}	
+			String cell = commandArray[0];
+			cellAssignment(userInput, cell);
+			return getGridText();
+			}else if(command.length() < 3){
+				return cellInspection(commandArray[0]);
+			}
+		}
+		return "";
+	}
+
+	public String[] splitCommand(String command){
+    	
+    	return command.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+    }
+
+	// Returns row value
+	public int getRows()
+	{
+		return rows;
+	}
+
+	// Returns column value
+	public int getCols()
+	{
+		return columns;
+	}
+	
+	// For assigning cell
+	public void cellAssignment(String input, String cell){
+		// Finds the cell's location through getRow and getCol, then sets it to a new cell of a certain format with the new input
+		SpreadsheetLocation point = new SpreadsheetLocation(cell);
+		// Recognizes that to enter a text, you have to utilize quotation marks, which are only accessible through \"
+		if(input.contains("\"")){
+			excel[point.getRow()][point.getCol()] = new TextCell(input);
+		// Recognizes that to enter a percent, you have to utilize the percent sign %
+		}else if(input.contains("%")){
+			excel[point.getRow()][point.getCol()] = new PercentCell(input);
+		// Recognizes that to enter a formula, it requires use of opening and closing parentheses ()
+		}else if(input.contains("(") && input.contains(")")){
+			excel[point.getRow()][point.getCol()] = new FormulaCell(input);
+		// Recognizes that to enter in a value there is no additional parts other than the singular command
+		}else{
+			excel[point.getRow()][point.getCol()] = new ValueCell(input);
+		}
+	}
+	
+
+	// Returns the location of the cell, row and column
+	public Cell getCell(Location loc){
+		return excel[loc.getRow()][loc.getCol()];
+	}
+	
+	// Makes sure the cell is proper
+	public String cellInspection(String cell){
+		SpreadsheetLocation point = new SpreadsheetLocation(cell);
+		String inspection = excel[point.getRow()][point.getCol()].fullCellText();
+		return inspection;
+	}
+	
+	// Cleans that one cell by replacing it with an Empty Cell
+	public void clearOneCell(String cell){
+		SpreadsheetLocation userInput = new SpreadsheetLocation(cell);
+		excel[userInput.getRow()][userInput.getCol()] = new EmptyCell();
+	}
+	
+	// Cleans the grid by replacing each cell with an Empty Cell
+	public void clearGrid(){
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < columns; j++){
+				excel[i][j] = new EmptyCell();
+			}
+		}
+	}
+	
+	// Returns the whole grid
+	public Cell[][] getSheet(){
+		return excel;
+	}
+
+	// Gets the grid text, and formats it to look like an excel sheet
+	public String getGridText()
+	{
+		String grid = "   |";
+		String cellString = null;
+		
+		// Sets the top to have the letters indicating column position
+		for (int i = 0; i < columns; i++){
+			// Letters incrementally grow larger, and include the spaces with line that separates each column
+			grid += (char) ('A' + i) + "         |";
+		}
+		
+		// Creates spacing and formatting for the grid
+		for(int i = 1; i <= rows; i++){
+			// Creates new line at the end of the row, then adds the marking number 
+			grid += "\n" + i;
+			// Recognizes that numbers will hit double figures, creates uniform spacing
+			if (i >= 10){
+				grid += " |";
+			}
+			else{
+				grid += "  |";
+			}
+			
+			// Sets the inputs of each cell 
+			for(int k = 0; k < columns; k++){
+				// Recognizes that an input "" is essentially a blank cell
+				if (excel[i-1][k].abbreviatedCellText()==""){
+					cellString = blankString;
+				// Otherwise, the value is placed into its shortened form, to fit in the alloted space
+				}else{
+					cellString = excel[i-1][k].abbreviatedCellText();
+				}
+				// Adds the separating line between parts
+				grid += cellString + "|";
+			}
+		}
+		// Adds line when finished
+		grid += "\n";
+		return grid;
+
+		
+	}
+
+}

@@ -1,0 +1,37 @@
+package textExcel;
+
+public class PercentCell extends RealCell {
+	
+	@Override
+	public String abbreviatedCellText() {
+		String returnStr = ((int)(getDoubleValue())) + "%";		// base string, with percent value
+		//String returnStr = value;
+		if (fullCellText().length() > 10){
+			return fullCellText().substring(0,10);
+		// For situation where cell text is smaller than alloted space, returns the text with additional spaces to fill up space
+		}else {
+			String finalString = fullCellText();
+			while (finalString.length() < 10){
+				finalString += " ";
+			}
+			return finalString;
+		}
+	}
+
+	@Override
+	public String fullCellText() {
+		return (getDoubleValue()/100.0) + "";					//Takes double value, turns it into decimal percent form, and casts it back to a string
+	}
+	
+	public PercentCell(String initialValue){
+		super(initialValue);									//Constructor, uses super contructor in order to assign passed value to the string field
+	}
+	
+	public double getDoubleValue(){
+		return Double.parseDouble(super.fullCellText().substring(0, super.fullCellText().length()-1)); 		//breaks down the string field into parsed double without the last char (%) 
+	}
+
+	public String getType(){
+		return "PercentCell";									//returns cell type
+	}
+}

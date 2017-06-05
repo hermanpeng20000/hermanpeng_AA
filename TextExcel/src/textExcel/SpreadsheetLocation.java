@@ -1,36 +1,41 @@
 package textExcel;
 
-//Update this file with your own code.
-
+// Class SpreadsheetLocation implements Location
 public class SpreadsheetLocation implements Location
 {
-	private int col;
+	// Initializes the column and row ints necessary to gauge spreadsheet
+	private int column;
 	private int row;
+	
+	// Method to reorganize the spreadsheet
+    public SpreadsheetLocation(String cellInput)
+    {
+    	// Calls upon split method written under this method
+        String [] array = split(cellInput);
+        char temporary = array[0].charAt(0);
+        // Readjustments of column and row
+        column = (int)temporary - (int)'A';
+        row = Integer.parseInt(array[1])-1;
+    }
+    
+    // Method to split cell into separate parts into an array
+    public String[] split(String cellInput){
+    	return cellInput.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+    }
+    
     @Override
+    // Getter to return row
     public int getRow()
     {
-        // TODO Auto-generated method stub
         return row;
     }
 
     @Override
+    // Getter to return column
     public int getCol()
     {
-        // TODO Auto-generated method stub
-        return col;
+        return column;
     }
     
-    public SpreadsheetLocation(String cellName)
-    {
-        String [] array = split(cellName);
-        char temp=array[0].charAt(0);
-        col=(int)temp-(int)'A';
-        row=Integer.parseInt(array[1])-1;
-    }
-    
-    public String[] split(String cellName){
-    	
-    	return cellName.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-    }
 
 }

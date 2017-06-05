@@ -4,36 +4,38 @@ public class PercentCell extends RealCell {
 	
 	@Override
 	public String abbreviatedCellText() {
-		String returnStr = ((int)(getDoubleValue())) + "%";		// base string, with percent value
+		// Base string with percent value
+		String finalString = ((int)(getDoubleValue())) + "%";
 		//String returnStr = value;
-		if (returnStr.length() < 10){							// adding to length with spaces to fit 10 chars
-			while (returnStr.length() < 10){
-				returnStr += " ";
+		if (fullCellText().length() > 10){
+			return fullCellText().substring(0,10);
+		// For situation where cell text is smaller than alloted space, returns the text with additional spaces to fill up space
+		}else {
+			while (finalString.length() < 10){
+				finalString += " ";
 			}
-			return returnStr;
-		} else if (returnStr.length() > 10){					//cuts base string to length of 10
-			returnStr = returnStr.substring(0, 10);
-			return returnStr;
-		}else{
-			return returnStr;									//if 10 in length, returns base string
+			return finalString;
 		}
-
 	}
 
-	@Override
+	// Converts double value into decimal percent form
 	public String fullCellText() {
-		return (getDoubleValue()/100.0) + "";					//Takes double value, turns it into decimal percent form, and casts it back to a string
+		return (getDoubleValue()/100.0) + "";					
 	}
 	
-	public PercentCell(String initialValue){
-		super(initialValue);									//Constructor, uses super contructor in order to assign passed value to the string field
+	// Sets the input value through use of super class
+	public PercentCell(String value){
+		setValue(value);									
 	}
 	
+	// Breaks down into parsed double 
 	public double getDoubleValue(){
-		return Double.parseDouble(super.fullCellText().substring(0, super.fullCellText().length()-1)); 		//breaks down the string field into parsed double without the last char (%) 
+		String cutValue = getValue().substring(0, getValue().length() - 1);
+		return(Double.parseDouble(cutValue)/100.0); 
 	}
 
+	// Returns cell type
 	public String getType(){
-		return "PercentCell";									//returns cell type
+		return "PercentCell";								
 	}
 }

@@ -1,22 +1,29 @@
-package textExcel;
-import java.util.*;
+// Herman Peng
+// APCS Period 1
+// Project: Text Excel
+// 2017 Fall Semester
 
-import java.io.FileNotFoundException;
+package textExcel;
+
+// Sets up the scanner that is used to read commands from user
 import java.util.Scanner;
 
-// Update this file with your own code.
-
+// The "brain" of the program, where a sheet is created and user input processed
 public class TextExcel
 {
 
 	public static void main(String[] args)
 	{
-	    Spreadsheet testSheet=new Spreadsheet();
-	    Scanner input = new Scanner(System.in);
-	    String command = input.nextLine();
+		// Create a new sheet that will be modified
+	    Spreadsheet sheet = new Spreadsheet();
+	    // Takes in input from user
+	    Scanner console = new Scanner(System.in);
+	    // Stores the user input as a command to be processed
+	    String command = console.nextLine();
+	    // This loop is where the action is performed, continuing to work until "quit" is entered
 	    while(!command.equals("quit")){
-	    	testSheet.processCommand(command);
-	    	command = input.nextLine();
+	    	sheet.processCommand(command);
+	    	command = console.nextLine();
 	    }
 	}
 }
